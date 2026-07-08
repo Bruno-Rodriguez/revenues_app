@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import date, timedelta
 from revenue import (
-    CONFIG, trip_fmt, rev_fmt, validate_num_from_txt,
+    CONFIG, validate_num_from_txt,
     get_credentials, import_sql_table, fill_fees_query,
     clean_table,
     calc_revenues, calc_trips
