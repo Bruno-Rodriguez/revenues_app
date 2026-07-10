@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import date, timedelta
 from revenue import (
-    CONFIG, validate_num_from_txt,
+    CONFIG, validate_num_from_txt, trip_fmt, rev_fmt,
     get_credentials, import_sql_table, fill_fees_query,
     clean_table,
     calc_revenues, calc_trips
@@ -112,15 +112,7 @@ if sim_revenues:
 
     for ciudad, resumen in results.items():
         st.write(f'Resumen de simulaciones para {ciudad}, ingreso esperado por comisiones:')
-        st.dataframe(resumen.style.format({
-            "media": "{:.2f}",
-            "desv": "{:.2f}",
-            "2.5%": "{:.2f}",
-            "5%": "{:.2f}",
-            "50%": "{:.2f}",
-            "95%": "{:.2f}",
-            "97.5%": "{:.2f}"
-        })
+        st.dataframe(resumen.style.format(rev_fmt)
         )
         # st.line_chart(results[ciudad].loc[:,'media'])
 
@@ -152,14 +144,6 @@ if sim_trips:
 
     for ciudad, resumen in results.items():
         st.write(f'Resumen de simulaciones para {ciudad}, número de viajes necesarios por meta (con IGV de {igv:.0%}):')
-        st.dataframe(resumen.style.format({
-            "media": "{:.2f}",
-            "desv": "{:.2f}",
-            "2.5%": "{:.0f}",
-            "5%": "{:.0f}",
-            "50%": "{:.0f}",
-            "95%": "{:.0f}",
-            "97.5%": "{:.0f}"
-        })
+        st.dataframe(resumen.style.format(trip_fmt)
         )
         # st.line_chart(results[ciudad].loc[:,'media'])

@@ -8,14 +8,15 @@ CONFIG = {
 rev_fmt = {
     "media": "{:.2f}",
     "desv": "{:.2f}",
-    **{f"{perc:0%}" : "{:.2f}" for perc in CONFIG['percentiles'][CONFIG['percentiles']%0.01 == 0]},
-    **{f"{perc:.1%}" : "{:.2f}" for perc in CONFIG['percentiles'][CONFIG['percentiles']%0.01 != 0]},
+    **{f"{perc:.0%}" : "{:.2f}" for perc in CONFIG['percentiles'][100*CONFIG['percentiles']%1 == 0]},
+    **{f"{perc:.1%}" : "{:.2f}" for perc in CONFIG['percentiles'][100*CONFIG['percentiles']%1 != 0]},
 }
 
 trip_fmt = {
     "media": "{:.2f}",
     "desv": "{:.2f}",
-    **{f"{perc:.0%}" : "{:.0f}" for perc in CONFIG['percentiles'] }
+    **{f"{perc:.0%}" : "{:.0f}" for perc in CONFIG['percentiles'][100*CONFIG['percentiles']%1 == 0]},
+    **{f"{perc:.1%}" : "{:.0f}" for perc in CONFIG['percentiles'][100*CONFIG['percentiles']%1 != 0]},
 }
 
 def validate_num_from_txt(text,dtype=float,ll=1,ul=1000):
