@@ -36,6 +36,7 @@ def validate_num_from_txt(text,dtype=float,ll=1,ul=1000):
         return None, error
     if numbers is not None:
         if (numbers < ll).any() or (numbers > ul).any():
+            numbers = None
             error = f"Please enter only{string} numbers from {ll} up to {ul}."
             return None, error
 
