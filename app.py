@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import date, timedelta
 from revenue import (
-    CONFIG, validate_num_from_txt, trip_fmt, rev_fmt,
+    CONFIG, validate_num_from_txt,
     get_credentials, import_sql_table, fill_fees_query,
     clean_table,
     calc_revenues, calc_trips
@@ -112,8 +112,8 @@ if sim_revenues:
 
     for ciudad, resumen in results.items():
         st.write(f'Resumen de simulaciones para {ciudad}, ingreso esperado por comisiones:')
-        st.dataframe(resumen.style.format(rev_fmt)
-        )
+        st.dataframe(resumen.style.format(CONFIG['rev_fmt']))
+        resumen.to_csv(CONFIG['out_path']+f"ganancias_{ciudad}_{date.today()}.csv",sep='\t',float_format="{:.2f}")
         # st.line_chart(results[ciudad].loc[:,'media'])
 
 
@@ -144,6 +144,6 @@ if sim_trips:
 
     for ciudad, resumen in results.items():
         st.write(f'Resumen de simulaciones para {ciudad}, número de viajes necesarios por meta (con IGV de {igv:.0%}):')
-        st.dataframe(resumen.style.format(trip_fmt)
-        )
+        st.dataframe(resumen.style.format(CONFIG['trip_fmt']))
+        resumen.to_csv(CONFIG['out_path']+f"viajes_{ciudad}_{date.today()}.csv",sep='\t',float_format="{:.2f}")
         # st.line_chart(results[ciudad].loc[:,'media'])
